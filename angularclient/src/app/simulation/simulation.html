@@ -1,0 +1,79 @@
+<div class="row-elements">
+<div><span class="legend-color empty"></span> Empty</div>
+<div><span class="legend-color burning"></span> Burning</div>
+<div><span class="legend-color extinct"></span> Extinct</div>
+</div>
+
+<div class="row-elements">
+    <span>Auto-simulate</span>
+    <label class="switch">
+        <input type="checkbox" (change)="onAutoSimulateToggle()">
+        <span class="slider round"></span>
+    </label>
+</div>
+
+<div class="row-elements">
+
+    <div *ngIf="autoSimulating">
+        <button class="cssbuttons-io-button" (click)="startStopAutoSimulation()">
+            Start simulation
+            <div class="icon">
+                <svg
+                height="24"
+                width="24"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                >
+                <path d="M0 0h24v24H0z" fill="none"></path>
+                <path
+                    d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                    fill="currentColor"
+                ></path>
+                </svg>
+            </div>
+        </button>
+    </div>
+
+    <div *ngIf="!autoSimulating">
+        <button class="cssbuttons-io-button" (click)="nextStepSimulation()">
+            Next Step
+            <div class="icon">
+                <svg
+                height="24"
+                width="24"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                >
+                <path d="M0 0h24v24H0z" fill="none"></path>
+                <path
+                    d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                    fill="currentColor"
+                ></path>
+                </svg>
+            </div>
+        </button>
+    </div>
+
+    <!-- Add a label to track the current step -->
+    <div class="step-label">
+        Current step: {{ currentStep }}
+    </div>
+</div>
+
+<div class="forest-grid">
+  <div *ngFor="let row of grid; let y = index" class="grid-row" [style.grid-template-columns]="'repeat(' + row.length + ', 1fr)'">
+    <div
+      *ngFor="let cell of row; let x = index"
+      class="cell"
+      [style.width]="cellSize"
+      [style.height]="cellSize"
+      [class.empty]="cell === 0"
+      [class.burning]="cell === 1"
+      [class.extinct]="cell === 2"
+      (click)="toggleFire(y, x)"
+    >
+      <!-- Optional: Display coordinates for debugging -->
+      <!-- {{ x }},{{ y }} -->
+    </div>
+  </div>
+</div>

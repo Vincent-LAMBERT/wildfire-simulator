@@ -1,0 +1,84 @@
+.content {
+	display: flex;
+	justify-content: center;
+	width: 50%;
+	// max-width: 700px;
+	// margin-bottom: 3rem;
+	flex-wrap: wrap;
+	h1 {
+		margin-top: 1.75rem;
+	}
+	p {
+		margin-top: 1.5rem;
+	}
+}
+
+.row {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	gap: 20px;
+	padding-top: 5;
+	padding-bottom: 5px;
+	align-items: anchor-center;
+	p {
+		margin-top: auto;
+		margin-bottom: auto;
+		font-size: 1.25rem;
+	}
+	input {
+		margin-top: auto;
+		margin-bottom: auto;
+		font-size: 1rem;
+	}
+}
+
+.frame {
+	border-style: dotted;
+	border-width: 0.5mm;
+	border-radius: 5px;
+	padding: 5px;
+	display: grid;
+	grid-template-columns: auto auto;
+	row-gap: 5px;
+	column-gap: 20px;
+	p {
+		margin-top: auto;
+		margin-bottom: auto;
+		font-size: 1rem;
+	}
+	input {
+		margin-top: auto;
+		margin-bottom: auto;
+		font-size: 0.75rem;
+	}
+}
+
+.tree-icon {
+    max-height: 50px;
+    max-width: 50px;
+}
+
+.settings-icon {
+    max-height: 30px;
+    max-width: 30px;
+}
+
+$color_1: white;
+$background-color_1: DodgerBlue;
+$background-color_2: RoyalBlue;
+
+/* Style buttons */
+/* Darker background on mouse-over */
+.btn {
+	background-color: $background-color_1;
+	border: none;
+	color: $color_1;
+	padding: 12px 16px;
+    font-size: 1.5em;
+    border-radius: 10px;
+	cursor: pointer;
+	&:hover {
+		background-color: $background-color_2;
+	}
+}

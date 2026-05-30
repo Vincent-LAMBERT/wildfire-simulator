@@ -1,0 +1,49 @@
+
+<div class="row">
+    <div class="content">
+        <div class="row">
+        <img src="../../tree-svgrepo-com.svg" class="tree-icon">
+        <p>Forest size</p>
+        <input  type="number" 
+                id="width"
+                name="width"
+                required
+                min="1"
+                max="100"
+                value="15"
+                [(ngModel)]="width" /> <!-- Bind to width property -->
+        <p>×</p>
+        <input  type="number" 
+                id="height"
+                name="height"
+                required
+                min="1"
+                max="100"
+                value="15"
+                [(ngModel)]="height" /> <!-- Bind to height property -->
+        </div>
+        <div class="row">
+        <img src="../../settings-svgrepo-com.svg" class="settings-icon">
+        <div class="frame">
+            <p>Simulation steps (ms)</p>
+            <input  type="number" 
+                    id="step"
+                    name="step"
+                    required
+                    min="1"
+                    max="1000"
+                    value="500"/>
+            <p>Propagation probability</p>
+            <input  type="number" 
+                    id="prob"
+                    name="prob"
+                    required
+                    min="0"
+                    max="1"
+                    value="0.5"
+                    step="0.05"/>
+        </div>
+    </div>
+    
+    <app-simulation [grid_width]="width" [grid_height]="height"></app-simulation>
+</div>
