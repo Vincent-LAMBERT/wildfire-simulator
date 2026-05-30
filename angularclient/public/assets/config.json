@@ -1,0 +1,7 @@
+{
+  "grid_width": 15,
+  "grid_height": 15,
+  "simul_step": 0.5,
+  "propag_prob": 0.5,
+  "fired_up_trees": ""
+}

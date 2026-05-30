@@ -1,18 +1,67 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-simulation',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './simulation.html',
   styleUrl: './simulation.scss',
 })
-export class Simulation implements OnChanges {
+export class Simulation {
+  private _grid_width: number = 15;
+  private _grid_height: number = 15;
+  private _simul_step: number = 15;
+  private _propag_prob: String = "";
+  private _fired_up_trees: String = "";
+
   @Input()
-  grid_width: number = 15;
+  set grid_width(value: number) {
+    this._grid_width = value;
+    this.reinitializeGrid(); // React to changes
+  }
+
+  get grid_width(): number {
+    return this._grid_width;
+  }
+
   @Input()
-  grid_height: number = 15;
+  set grid_height(value: number) {
+    this._grid_height = value;
+    this.reinitializeGrid(); // React to changes
+  }
+
+  get grid_height(): number {
+    return this._grid_height;
+  }
+
   @Input()
+  set simul_step(value: number) {
+    this._simul_step = value;
+  }
+
+  get simul_step(): number {
+    return this._simul_step;
+  }
+
+  @Input()
+  set propag_prob(value: String) {
+    this._propag_prob = value;
+  }
+
+  get propag_prob(): String {
+    return this._propag_prob;
+  }
+
+  @Input()
+  set ired_up_trees(value: String) {
+    this._fired_up_trees = value;
+  }
+
+  get ired_up_trees(): String {
+    return this._fired_up_trees;
+  }
+  
   cellSize: string = '30px'; // Default width
 
   grid: number[][] = [];
@@ -21,18 +70,11 @@ export class Simulation implements OnChanges {
 
   // Initialize the grid when the component is created
   constructor() {
-    this.initializeGrid();
-  }
-
-  // Reinitialize the grid when inputs change
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['grid_width'] || changes['grid_height']) {
-      this.initializeGrid();
-    }
+    this.reinitializeGrid();
   }
 
   // Helper method to initialize the grid
-  private initializeGrid() {
+  public reinitializeGrid() {
     this.grid = Array(this.grid_height)
       .fill(null)
       .map(() => Array(this.grid_width).fill(0));
