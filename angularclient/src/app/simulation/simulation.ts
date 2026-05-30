@@ -11,9 +11,10 @@ import { FormsModule } from '@angular/forms';
 export class Simulation {
   private _grid_width: number = 15;
   private _grid_height: number = 15;
-  private _simul_step: number = 15;
-  private _propag_prob: String = "";
-  private _fired_up_trees: String = "";
+  private _simul_step: number = 0.5;
+  private _propag_prob: number = 0.5;
+  private _fired_up_trees: TreeCoordinates[] = [];
+  private extinguished_trees: TreeCoordinates[] = [];
 
   @Input()
   set grid_width(value: number) {
@@ -45,20 +46,21 @@ export class Simulation {
   }
 
   @Input()
-  set propag_prob(value: String) {
+  set propag_prob(value: number) {
     this._propag_prob = value;
   }
 
-  get propag_prob(): String {
+  get propag_prob(): number {
     return this._propag_prob;
   }
 
   @Input()
-  set ired_up_trees(value: String) {
+  set fired_up_trees(value: TreeCoordinates[]) {
     this._fired_up_trees = value;
+    this.updateTreesState(); // React to changes
   }
 
-  get ired_up_trees(): String {
+  get fired_up_trees(): TreeCoordinates[] {
     return this._fired_up_trees;
   }
   
@@ -79,6 +81,7 @@ export class Simulation {
       .fill(null)
       .map(() => Array(this.grid_width).fill(0));
     this.updateCellWidth();
+    this.updateTreesState();
   }
 
   private updateCellWidth() {
@@ -86,13 +89,31 @@ export class Simulation {
     this.cellSize = `${size}px`;
   }
 
+  private updateTreesState() {
+    // Extinguish trees
+    this.extinguished_trees.forEach(element => {
+      this.grid[element.x][element.y] = 0
+    });
+    // Fire up trees
+    this.fired_up_trees.forEach(element => {
+      this.grid[element.x][element.y] = 1
+    });
+    // Reinitialize extinguished trees to avoid too much loops in future iterations 
+    this.extinguished_trees = [];
+  }
+
   public toggleFire(x: number, y: number) {
-    console.log(`Toggling fire state at (${x}, ${y})`);
-    if (this.grid[x][y] === 0) {
-      this.grid[x][y] = 1; // Set on fire
-    } else if (this.grid[x][y] === 1) {
-      this.grid[x][y] = 0; // Empty
+    const index = this.fired_up_trees.findIndex(tree => tree.x === x && tree.y === y);
+    if (index !== -1) {
+       // Remove the tree from the list as it is not fired up anymore
+      this.fired_up_trees.splice(index, 1);
+      // Add it to extinguished_trees to optimize code clarity in updateTreesState
+      this.extinguished_trees.push({ x, y })
+    } else {
+      // Fire the tree
+      this.fired_up_trees.push({ x, y })
     }
+    this.updateTreesState();
   }
 
   // Toggle auto-simulation when the checkbox changes

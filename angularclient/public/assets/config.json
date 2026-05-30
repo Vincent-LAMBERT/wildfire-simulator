@@ -3,5 +3,18 @@
   "grid_height": 15,
   "simul_step": 0.5,
   "propag_prob": 0.5,
-  "fired_up_trees": ""
+  "fired_up_trees": [
+    {
+      "x": 8,
+      "y": 13
+    }, 
+    {
+      "x": 3,
+      "y": 2
+    }, 
+    {
+      "x": 13,
+      "y": 3
+    }
+  ]
 }
