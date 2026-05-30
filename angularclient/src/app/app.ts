@@ -9,5 +9,5 @@ import { ForestForm } from './forest-form/forest-form';
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('angularclient');
+  protected readonly title = signal('wildfire-simulation');
 }
