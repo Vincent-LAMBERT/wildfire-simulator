@@ -1,4 +1,5 @@
 {
+  "strategy": "all_or_nothing",
   "grid_width": 15,
   "grid_height": 15,
   "simul_step": 0.5,

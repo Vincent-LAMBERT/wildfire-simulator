@@ -46,6 +46,11 @@
                         value="0.5"
                         step="0.05"
                         [(ngModel)]="propag_prob"/>
+                <p>Simulation strategy</p>
+                <select [(ngModel)]="strategy">
+                    <option value="all_or_nothing">All or nothing</option>
+                    <option value="by_neighbour">By neighbour</option>
+                </select>
             </div>
         </div>
     </div>
@@ -129,5 +134,9 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div *ngIf="simulationEnded" class="simulation-content">
+        <p>Simulation ended after {{ currentStep }} steps.</p>
     </div>
 </div>

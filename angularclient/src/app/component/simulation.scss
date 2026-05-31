@@ -37,6 +37,12 @@ $background-color_4: #212121;
 	}
 }
 
+.simulation-content {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
 .row {
 	display: flex;
 	justify-content: center;

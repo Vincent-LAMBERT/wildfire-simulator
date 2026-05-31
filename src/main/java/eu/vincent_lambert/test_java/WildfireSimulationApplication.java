@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TestJavaApplication {
+public class WildfireSimulationApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TestJavaApplication.class, args);
+		SpringApplication.run(WildfireSimulationApplication.class, args);
 	}
 }
