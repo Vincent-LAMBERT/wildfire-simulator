@@ -18,6 +18,7 @@ export class Simulation implements OnChanges {
   private _fired_up_trees: TreeCoordinates[] = [];
   private _dead_trees: TreeCoordinates[] = [];
   private extinguished_trees: TreeCoordinates[] = [];
+  private runningAutoSimulation = false; // Flag to track if auto-simulation is running
   @Input()
   public simulationEnded: boolean = false; // Flag to indicate if the simulation has ended
 
@@ -92,7 +93,8 @@ export class Simulation implements OnChanges {
 
   @Input()
   grid: number[][] = [];
-  autoSimulating = false;
+  @Input()
+  autoSimulate = false;
   currentStep = 0;
 
   constructor(
@@ -110,12 +112,18 @@ export class Simulation implements OnChanges {
       .fill(null)
       .map(() => Array(this.grid_width).fill(0));
     this.updateCellWidth();
+    this.removeFiresOutsideGrid();
     this.updateGUITrees();
   }
 
   private updateCellWidth() {
     const size = 400 / Math.max(this.grid_width, this.grid_height);
     this.cellSize = `${size}px`;
+  }
+
+  private removeFiresOutsideGrid() {
+    this.fired_up_trees = this.fired_up_trees.filter(tree => tree.y < this.grid_width && tree.x < this.grid_height);
+    this.dead_trees = this.dead_trees.filter(tree => tree.y < this.grid_width && tree.x < this.grid_height);
   }
 
   private updateFiredUpTrees() {
@@ -167,11 +175,6 @@ export class Simulation implements OnChanges {
     this.updateGUITrees();
   }
 
-  // Toggle auto-simulation when the checkbox changes
-  onAutoSimulateToggle() {
-    this.autoSimulating = !this.autoSimulating;
-  }
-
   public nextStepSimulation() {
     if (this.simulationEnded) {
       return; // Do not proceed if the simulation has already ended
@@ -200,10 +203,22 @@ export class Simulation implements OnChanges {
   }
 
   public startStopAutoSimulation() {
-    // Auto-simulation logic: if autoSimulating is true, we call nextStepSimulation every simul_step seconds
-    if (this.autoSimulating) {
-      this.nextStepSimulation();
-      setTimeout(() => this.startStopAutoSimulation(), this.simul_step * 1000);
+    if (this.runningAutoSimulation) {
+      this.runningAutoSimulation = false;
+      return; // Stop the auto-simulation
     }
+    // Auto-simulation logic: if autoSimulate is true, we call nextStepSimulation every simul_step seconds
+    if (this.autoSimulate) {
+      this.runningAutoSimulation = true;
+      this.startAutoSimulate();
+    }
+  }
+
+  public startAutoSimulate() {
+    if (!this.runningAutoSimulation || this.simulationEnded) {
+      return; // Stop if the flag is false or if the simulation has ended
+    }
+    this.nextStepSimulation();
+    setTimeout(() => this.startAutoSimulate(), this.simul_step * 1000);
   }
 }

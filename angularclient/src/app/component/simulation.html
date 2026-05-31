@@ -64,15 +64,16 @@
     <div class="row-elements">
         <span>Auto-simulate</span>
         <label class="switch">
-            <input type="checkbox" (change)="onAutoSimulateToggle()">
+            <input  type="checkbox"
+                    [(ngModel)]="autoSimulate">
             <span class="slider round"></span>
         </label>
     </div>
 
     <div class="row-elements">
-        <div *ngIf="autoSimulating">
+        <div *ngIf="autoSimulate">
             <button class="cssbuttons-io-button" (click)="startStopAutoSimulation()">
-                Start simulation
+                Start/Stop simulation
                 <div class="icon">
                     <svg
                     height="24"
@@ -90,7 +91,7 @@
             </button>
         </div>
 
-        <div *ngIf="!autoSimulating">
+        <div *ngIf="!autoSimulate">
             <button class="cssbuttons-io-button" (click)="nextStepSimulation()">
                 Next Step
                 <div class="icon">
